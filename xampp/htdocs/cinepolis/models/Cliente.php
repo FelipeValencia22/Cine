@@ -10,7 +10,7 @@ Class Cliente extends Model{
     private $identificacion;
     private $Tipo_id;
     
-    function __construct($id, $nombre, $usuario, $contrasena, $identificacion, $Tipo_id) {
+    function __construct($nombre, $usuario, $contrasena, $identificacion, $Tipo_id, $id = null) {
         $this->id = $id;
         $this->nombre = $nombre;
         $this->usuario = $usuario;
