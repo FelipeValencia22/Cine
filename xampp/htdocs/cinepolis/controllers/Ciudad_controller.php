@@ -11,8 +11,21 @@ class Ciudad_controller extends Controller{
     }
     
      // Ciudades
-    
     public function listarCiudades(){
         print_r(Ciudad_bl::listarCiudades());
     }
+    
+    public function guardarCiudad(){
+        print_r(Ciudad_bl::guardarCiudad());
+    }
+    
+    public function buscarCiudadPorNombre(){
+        print_r(Ciudad_bl::buscarCiudadPorNombre());
+    }
+    
+    public function borrarCiudadPorNombre(){
+        print_r(Ciudad_bl::borrarCiudadPorNombre());
+    }
+    
+    
 }

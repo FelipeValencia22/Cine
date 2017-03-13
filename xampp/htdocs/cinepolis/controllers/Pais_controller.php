@@ -1,19 +1,31 @@
 <?php
 
-class Pais_controller extends Controller{
-    
+class Pais_controller extends Controller {
+
     function __construct() {
         parent::__construct();
     }
 
-    public function index(){
-        $this->view->render($this,"pais","Ejemplo");
+    public function index() {
+        $this->view->render($this, "pais", "Ejemplo");
     }
-    
+
     // Funciones
-    
-    public function listarPaises(){
+
+    public function listarPaises() {
         print_r(Pais_bl::listarPaises());
     }
-    
+
+    public function guardarPais() {
+        print_r(Pais_bl::guardarPais());
+    }
+
+    public function buscarPaisPorNombre() {
+        print_r(Pais_bl::buscarPaisPorNombre());
+    }
+
+    public function borrarPaisPorNombre() {
+        print_r(Pais_bl::borrarPaisPorNombre());
+    }
+
 }

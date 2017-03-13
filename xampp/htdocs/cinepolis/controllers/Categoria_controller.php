@@ -18,4 +18,14 @@ class Categoria_controller extends Controller{
     public function listarCategorias(){
         print_r(Categoria_bl::listarCategorias());
     }
+    
+    public function buscarCategoriaPorNombre(){
+        print_r(Categoria_bl::buscarCategoriaPorNombre());
+    }
+    
+    public function borrarCategoriaPorNombre(){
+        print_r(Categoria_bl::borrarCategoriaPorNombre());
+    }
+    
+    
 }

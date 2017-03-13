@@ -11,7 +11,6 @@ class Pelicula_controller extends Controller{
     }
     
     // Peliculas
-    
     public function listarPeliculas(){
         print_r(Pelicula_bl::listarPeliculas());
     }
