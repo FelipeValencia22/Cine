@@ -1,8 +1,7 @@
-
-<?php include MODULE . "head.php";?>
+<?php include MODULE . "head.php"; ?>
 <body>
     <?php include MODULE . "headerC.php"; ?>
-    
+
 <html>
     <head>
         <style>
@@ -61,44 +60,64 @@
     <body>
         <ul>
             <li class="dropdown">
-                <a href="javascript:void(0)" class="dropbtn">Teatro</a>
-                <div class="dropdown-content">
-                    <a href="<?php echo URL;?>Teatro/crear">Crear teatro</a>
-                    <a href="<?php echo URL;?>Teatro/listar">Listar teatros</a>
-                    <a href="<?php echo URL;?>Teatro/eliminar">Eliminar teatros</a>
-                </div>
-            </li>
-            
-            <li class="dropdown">
-                <a href="javascript:void(0)" class="dropbtn">Pelicula</a>
-                <div class="dropdown-content">
-                    <a href="<?php echo URL;?>Pelicula/crear">Crear Pelicula</a>
-                    <a href="<?php echo URL;?>Pelicula/crear">Buscar Pelicula</a>
-                </div>
-            </li>
-            
-            <li class="dropdown">
-                <a href="javascript:void(0)" class="dropbtn">Funcion</a>
-                <div class="dropdown-content">
-                    <a href="<?php echo URL;?>Funcion/crear">Crear función</a>
-                    <a href="<?php echo URL;?>Funcion/listar">Listar funciones</a>
-                </div>
-            </li>
-            
-            <li class="dropdown">
                 <a href="javascript:void(0)" class="dropbtn">Categoria</a>
                 <div class="dropdown-content">
-                    <a href="<?php echo URL;?>Categoria/crear">Crear categoria</a>
-                    <a href="<?php echo URL;?>Categoria/listar">Listar categorias</a>
+                    <a href="<?php echo URL; ?>Categoria/crear">Crear</a>
+                    <a href="<?php echo URL; ?>Categoria/listar">Listado</a>
                 </div>
             </li>
-            
+
             <li class="dropdown">
                 <a href="javascript:void(0)" class="dropbtn">Ciudad</a>
                 <div class="dropdown-content">
-                    <a href="<?php echo URL;?>Ciudad/listar">CRUD Ciudad</a>
+                    <a href="<?php echo URL; ?>Ciudad/crear">Crear</a>
+                    <a href="<?php echo URL; ?>Ciudad/listar">Listado</a>
                 </div>
             </li>
+
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Cliente</a>
+                <div class="dropdown-content">
+                    <a href="<?php echo URL; ?>Cliente/crear">Crear</a>
+                    <a href="<?php echo URL; ?>Cliente/listar">Listado</a>
+                </div>
+            </li>
+
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Funcion</a>
+                <div class="dropdown-content">
+                    <a href="<?php echo URL; ?>Funcion/crear">Crear</a>
+                    <a href="<?php echo URL; ?>Funcion/listar">Listado</a>
+                </div>
+            </li>
+            
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Pais</a>
+                <div class="dropdown-content">
+                    <a href="<?php echo URL; ?>Pais/crear">Crear</a>
+                    <a href="<?php echo URL; ?>Pais/listar">Listado</a>
+                </div>
+            </li>
+
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Teatro</a>
+                <div class="dropdown-content">
+                    <a href="<?php echo URL; ?>Teatro/crear">Crear</a>
+                    <a href="<?php echo URL; ?>Teatro/listar">Listado</a>
+                </div>
+            </li>
+
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Pelicula</a>
+                <div class="dropdown-content">
+                    <a href="<?php echo URL; ?>Pelicula/crear">Crear</a>
+                    <a href="<?php echo URL; ?>Pelicula/crear">Listado</a>
+                </div>
+            </li>
+
+
+
+
         </ul>
 
     </body>

@@ -26,9 +26,15 @@ class Funcion_controller extends Controller{
     }
     
     public function listar(){
-        $this->view->funciones = Funcion::getAll();
+        $this->view->funciones = Funcion_bl::listarFunciones();
         $this->view->render($this,"listar","CinePolis");
-      //  print_r(Teatro_bl::listarTeatro());
     }
+    
+    public function eliminar(){
+        $id= $_GET['id'];
+        $r= Funcion_bl::eliminarFuncion($id);
+        header("Location:".URL."Funcion/listar");
+    }
+    
     
 }

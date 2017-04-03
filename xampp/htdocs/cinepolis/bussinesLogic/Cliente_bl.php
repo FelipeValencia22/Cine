@@ -10,37 +10,33 @@ class Cliente_bl {
             return "No hay Clientes";
         }
     }
+    
+    public function  eliminarCliente($id){
+      $cliente= Cliente::getById($id);
+      $cliente->delete();
+  }
 
-    public function guardarCliente() {
-        if (isset($_GET["nombre"]) && isset($_GET["usuario"]) && isset($_GET["contrasena"]) &&
-                isset($_GET["identificacion"]) && isset($_GET["Tipo_id"])) {
-            $nombre = $_GET["nombre"];
-            $usuario = $_GET["usuario"];
-            $contrasena = $_GET["contrasena"];
-            $identificacion = $_GET["identificacion"];
-            $Tipo_id = $_GET["Tipo_id"];
-            if (tipoIdExiste($Tipo_id)) { // Validar si el tipo de ID existe
-                $usuarioExiste = Cliente::getBy("usuario", $usuario);
-                if (is_null($usuarioExiste)) {
-                    $usuarioExiste = Cliente::getBy("identificacion", $identificacion);
-                    if (is_null($usuarioExiste)) { // Validar si el usuario e identificación existen
-                        $cliente = new Cliente($nombre, $usuario, $contrasena, $identificacion, $Tipo_id);
-                        $cliente->create();
-                        $clienteCreado = Categoria::getBy("identificacion", $identificacion);
-                        if (is_null($clienteCreado)) {
-                            echo "El cliente no se creó";
-                        } else {
-                            echo "El cliente se creó satisfactoriamente </br>";
-                            print_r($clienteCreado);
-                        }
-                    } else {
-                        echo "El número de identificación ya está registrado";
-                    }
-                } else {
-                    echo "El nombre de usuario ya existe";
-                }
+    public function guardarCliente($clienteArr) {
+        $clienteArr["id"] = null;
+        $clienteArr["Tipo_id"] = null; 
+        $Tipo_id= TipoIdentificacion::getById($clienteArr["tipoid"]);
+        unset($clienteArr["tipoid"]);
+
+        $usuarioExiste = Cliente::getBy("usuario", $clienteArr["usuario"]);
+        if (is_null($usuarioExiste)) {
+            $usuarioExiste = Cliente::getBy("identificacion", $clienteArr["identificacion"]);
+            if (is_null($usuarioExiste)) {
+                $cliente = Cliente::instanciate($clienteArr);
+                $cliente->has_One("TipoIdentificacion", $Tipo_id);
+                $r = $cliente->create();
+            }else{
+                $r="El tipo de identificación ya se encuentra registrado";
             }
+        } else {
+            $r="El usuario ya se encuentra registrado";
         }
+
+        return $r;
     }
 
     public function tipoIdExiste($tipoId) {
@@ -51,7 +47,7 @@ class Cliente_bl {
             return true;
         }
     }
-    
+
     public function buscarClientePorUsuario() {
         if (isset($_GET["usuario"])) {
             $usuario = $_GET["usuario"];
@@ -63,7 +59,7 @@ class Cliente_bl {
             }
         }
     }
-    
+
     public function buscarClientePorIdentificacion() {
         if (isset($_GET["identificacion"])) {
             $identificacion = $_GET["identificacion"];
@@ -75,7 +71,7 @@ class Cliente_bl {
             }
         }
     }
-    
+
     public function borrarBorrarClientePorUsuario() {
         if (isset($_GET["usuario"])) {
             $usuario = $_GET["usuario"];
@@ -93,7 +89,7 @@ class Cliente_bl {
             }
         }
     }
-    
+
     public function borrarBorrarClientePorIdentificacion() {
         if (isset($_GET["identificacion"])) {
             $usuario = $_GET["usuario"];
@@ -111,7 +107,5 @@ class Cliente_bl {
             }
         }
     }
-    
-    
 
 }

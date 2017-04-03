@@ -14,7 +14,7 @@ class Teatro_controller extends Controller{
     public function save(){
         $teatro= $_POST;
         $r= Teatro_bl::guardarTeatro($teatro);
-        header("Location:".URL);
+        header("Location:".URL."Teatro/listar");
     }
     
     // Teatro
@@ -31,11 +31,16 @@ class Teatro_controller extends Controller{
     }
     
     public function eliminar(){
-        $this->view->teatros = Teatro::getAll();
-        $this->view->render($this,"eliminar","CinePolis");
         $id= $_GET['id'];
         $r= Teatro_bl::eliminarTeatro($id);
-        header("Location:".URL);
+        header("Location:".URL."Teatro/listar");
+    }
+    
+    public function editar(){
+        $id= $_GET['id'];
+        $this->view->teatros = Teatro::getById($id);
+        $this->view->render($this,"editar","CinePolis");
+        
     }
     
     public function obtenerValores($id){

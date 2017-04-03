@@ -11,21 +11,23 @@ class Ciudad_bl {
         }
     }
     
-
-    public function guardarCiudad() {
-        if (isset($_GET["nombre"]) && isset($_GET["Pais_id"])) {
-            $nombre = $_GET["nombre"];
-            $Pais_id = $_GET["Pais_id"];
-            $ciudad = new Ciudad($nombre, $Pais_id);
-            $ciudad->create();
-            $ciudadCreada = Ciudad::getBy("nombre", $nombre);
-            if (is_null($ciudadCreada)) {
-                echo "La ciudad no se creó";
-            } else {
-                echo "La ciudad se creó satisfactoriamente </br>";
-                print_r($ciudadCreada);
-            }
-        }
+    public function  eliminarCiudad($id){
+      $ciudad= Ciudad::getById($id);
+      $ciudad->delete();
+  }
+    
+    public function guardarCiudad($ciudadArr){
+        $ciudadArr["id"] = null;
+        $ciudadArr["Pais_id"] = null;
+        $Pais= Pais::getById($ciudadArr["pais"]);
+        unset($ciudadArr["pais"]);
+        
+        $ciudad= Ciudad::instanciate($ciudadArr);
+        $ciudad->has_one("Pais",$Pais);
+        
+        $r=$ciudad->create();
+        
+        return $r;        
     }
 
     public function buscarCiudadPorNombre() {

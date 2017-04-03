@@ -10,6 +10,11 @@ class Funcion_bl {
             return "No hay Funciones";
         }
     }
+    
+     public function  eliminarFuncion($id){
+      $funcion= Funcion::getById($id);
+      $funcion->delete();
+  }
 
     
 

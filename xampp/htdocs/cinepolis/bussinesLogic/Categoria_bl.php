@@ -21,19 +21,19 @@ class Categoria_bl {
             }
         }
     }
-    
-    public function save($categoriaArr){
+
+    public function save($categoriaArr) {
         $categoriaArr["id"] = null;
-        $categoria= Categoria::instanciate($categoriaArr);
-        
-        $r=$categoria->create();
+        $categoria = Categoria::instanciate($categoriaArr);
+
+        $r = $categoria->create();
         $categoriaCreada = Categoria::getBy("nombre", $categoriaArr["nombre"]);
         if (is_null($categoriaCreada)) {
-                echo "La categoria no se creó";
-            } else {
-                echo "La categoria se creó satisfactoriamente </br>";
-                print_r($categoriaCreada);
-            }    
+            echo "La categoria no se creó";
+        } else {
+            echo "La categoria se creó satisfactoriamente </br>";
+            print_r($categoriaCreada);
+        }
         return $r;
     }
 
@@ -65,6 +65,11 @@ class Categoria_bl {
                 echo "La Categoria no existe";
             }
         }
+    }
+
+    public function eliminarCategoria($id) {
+        $categoria= Categoria::getById($id);
+        $categoria->delete();
     }
 
 }

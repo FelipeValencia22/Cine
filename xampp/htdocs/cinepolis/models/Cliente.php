@@ -8,16 +8,27 @@ Class Cliente extends Model{
     private $usuario;
     private $contrasena;
     private $identificacion;
+    private $email;
     private $Tipo_id;
     
-    function __construct($nombre, $usuario, $contrasena, $identificacion, $Tipo_id, $id = null) {
+    function __construct($nombre, $usuario, $contrasena, $identificacion, $email, $Tipo_id, $id = null) {
         $this->id = $id;
         $this->nombre = $nombre;
         $this->usuario = $usuario;
         $this->contrasena = $contrasena;
         $this->identificacion = $identificacion;
+        $this->email = $email;
         $this->Tipo_id = $Tipo_id;
     }
+
+    
+    private $has_one = array( 
+      'TipoIdentificacion'=>array(
+          'class'=>'TipoIdentificacion',
+          'join_as'=>'Tipo_id',
+          'join_with'=>'id'
+          )
+      );
     
     public function getMyVars() {
         return get_object_vars($this);
@@ -77,6 +88,24 @@ Class Cliente extends Model{
 
     function setTipo_id($Tipo_id) {
         $this->Tipo_id = $Tipo_id;
-    }    
+    }   
+    
+    function getHas_one() {
+        return $this->has_one;
+    }
+
+    function setHas_one($has_one) {
+        $this->has_one = $has_one;
+    }
+    
+    function getEmail() {
+        return $this->email;
+    }
+
+    function setEmail($email) {
+        $this->email = $email;
+    }
+
+
     
 }

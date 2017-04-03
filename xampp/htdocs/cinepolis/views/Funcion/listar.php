@@ -1,25 +1,46 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="<?php print(URL); ?>public/styles/style.css">
 
+</head>
 <body>
     <?php include MODULE . "template.php"; ?>
-    <div style="width: 60%; margin: 5% auto;">
-        <form class="form-horizontal" action="<?php echo URL . "Funcion/listar" ?>" enctype="multipart/form-data"  method="post">
+    <div style="width: 90%; margin: 5% auto;">
+        <h1>Funciones</h1>
+        <form class="form-horizontal" action="<?php echo URL . "Teatro/listar" ?>" enctype="multipart/form-data"  method="post">
             <div class="teatros">
-                <?php foreach ($this->funciones as $funcion): ?>
-                <label for="id" style="margin: 10px;" ><h2>Función</h2></label>
-                <div id="id" class="teatros" > 
-                    <label for="nombreid" style="margin: 10px;" >Hora:</label>
-                    <div style="margin:10px;" id="nombreid" class="title"><?php echo $funcion["hora"]; ?></div>
-                    <label for="telefonoid" style="margin: 10px;" >Fecha:</label>
-                    <div style="margin:10px;" id="telefonoid" class="title"><?php echo $funcion["fecha"]; ?></div>
-                    <label for="dirid" style="margin: 10px;" >Sala:</label>
-                    <div style="margin:10px;" id="dirid" class="title"><?php echo $funcion["Sala_id"]; ?></div>
-                    <label for="ciuid" style="margin: 10px;" >Pelicula:</label>
-                    <div style="margin:10px;" class="title"><?php echo $funcion["Pelicula_id"]; ?></div>
-                    <br/>
+                <div class="rg-container"> 
+                    <div class="rg-content">
+                        <table class="rg-table zebra">
+                            <thead>
+                                <tr>
+                                    <th class="text">Hora</th>
+                                    <th class="text">Fecha</th>
+                                    <th class="text">Sala</th>
+                                    <th class="text">Pelicula</th>
+                                    <th class="text">Editar</th>
+                                    <th class="text">Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($this->funciones as $funcion): ?>
+                                    <tr>
+                                        <td><?php echo $funcion["hora"]; ?></td>
+                                        <td><?php echo $funcion["fecha"]; ?></td>
+                                        <td><?php echo $funcion["Sala_id"]; ?></td>
+                                        <td><?php echo $funcion["Pelicula_id"]; ?></td>
+                                        <td><a href="editar?id=<?php echo $funcion["id"]; ?>">Editar</a></td>
+                                        <td><a onclick="javascript:return confirm('¿Seguro de eliminar la función?');" href="eliminar?id=<?php echo $funcion["id"]; ?>">Eliminar</a></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     </div>
-                <?php endforeach; ?>
+                </div>
             </div>
         </form>
     </div>
 </body>
-</hmtl>

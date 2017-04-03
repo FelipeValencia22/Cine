@@ -8,8 +8,8 @@
 <body>
     <?php include MODULE . "template.php"; ?>
     <div style="width: 90%; margin: 5% auto;">
-        <h1>Categorias</h1>
-        <form class="form-horizontal" action="<?php echo URL . "Categoria/listar" ?>" enctype="multipart/form-data"  method="post">
+        <h1>Ciudades</h1>
+        <form class="form-horizontal" action="<?php echo URL . "Ciudad/listar" ?>" enctype="multipart/form-data"  method="post">
             <div class="teatros">
                 <div class="rg-container"> 
                     <div class="rg-content">
@@ -17,14 +17,19 @@
                             <thead>
                                 <tr>
                                     <th class="text">Nombre</th>
+                                    <th class="text">Pais</th>
+                                    <th class="text">Editar</th>
+                                    <th class="text">Eliminar</th>
+
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($this->categorias as $categoria): ?>
+                                <?php foreach ($this->ciudades as $ciudad): ?>
                                     <tr>
-                                        <td><?php echo $categoria["nombre"]; ?></td>
-                                        <td><a href="editar?id=<?php echo $categoria["id"]; ?>">Editar</a></td>
-                                        <td><a onclick="javascript:return confirm('¿Seguro de eliminar el teatro?');" href="eliminar?id=<?php echo $categoria["id"]; ?>">Eliminar</a></td>
+                                        <td><?php echo $ciudad["nombre"]; ?></td>
+                                        <td><?php echo $ciudad["Pais_id"]; ?></td>
+                                        <td><a href="editar?id=<?php echo $ciudad["id"]; ?>">Editar</a></td>
+                                        <td><a onclick="javascript:return confirm('¿Seguro de eliminar la ciudad?');" href="eliminar?id=<?php echo $ciudad["id"]; ?>">Eliminar</a></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

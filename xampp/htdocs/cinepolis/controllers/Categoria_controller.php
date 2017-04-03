@@ -43,5 +43,11 @@ class Categoria_controller extends Controller{
         print_r(Categoria_bl::borrarCategoriaPorNombre());
     }
     
+    public function eliminar(){
+        $id= $_GET['id'];
+        $r= Categoria_bl::eliminarCategoria($id);
+        header("Location:".URL."Categoria/listar");
+    }
+    
     
 }
