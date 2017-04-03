@@ -8,6 +8,8 @@
     define('MODELS','./models/');
     define('BL','./bussinesLogic/');
     define('MODULE','./views/modules/');
+    define('CONTROLLER','./controllers/');
+    define('UI','./public/');
 
     define('_DB_TYPE', 'mysql');
     define('_DB_HOST' , 'localhost');

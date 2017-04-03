@@ -1,0 +1,311 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema cinepolis
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `cinepolis` ;
+
+-- -----------------------------------------------------
+-- Schema cinepolis
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `cinepolis` DEFAULT CHARACTER SET utf8 ;
+USE `cinepolis` ;
+
+-- -----------------------------------------------------
+-- Table `cinepolis`.`TipoIdentificacion`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cinepolis`.`TipoIdentificacion` ;
+
+CREATE TABLE IF NOT EXISTS `cinepolis`.`TipoIdentificacion` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `cinepolis`.`Cliente`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cinepolis`.`Cliente` ;
+
+CREATE TABLE IF NOT EXISTS `cinepolis`.`Cliente` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `usuario` VARCHAR(45) NOT NULL,
+  `contraseña` VARCHAR(45) NOT NULL,
+  `identificacion` INT NOT NULL,
+  `tipo_identificacion_id` INT NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_Cliente_tipo_identificacion1`
+    FOREIGN KEY (`tipo_identificacion_id`)
+    REFERENCES `cinepolis`.`TipoIdentificacion` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_Cliente_tipo_identificacion1_idx` ON `cinepolis`.`Cliente` (`tipo_identificacion_id` ASC);
+
+CREATE UNIQUE INDEX `email_UNIQUE` ON `cinepolis`.`Cliente` (`email` ASC);
+
+
+-- -----------------------------------------------------
+-- Table `cinepolis`.`Pais`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cinepolis`.`Pais` ;
+
+CREATE TABLE IF NOT EXISTS `cinepolis`.`Pais` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `cinepolis`.`Ciudad`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cinepolis`.`Ciudad` ;
+
+CREATE TABLE IF NOT EXISTS `cinepolis`.`Ciudad` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `Pais_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_Ciudad_Pais1`
+    FOREIGN KEY (`Pais_id`)
+    REFERENCES `cinepolis`.`Pais` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_Ciudad_Pais1_idx` ON `cinepolis`.`Ciudad` (`Pais_id` ASC);
+
+
+-- -----------------------------------------------------
+-- Table `cinepolis`.`Teatro`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cinepolis`.`Teatro` ;
+
+CREATE TABLE IF NOT EXISTS `cinepolis`.`Teatro` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` INT NOT NULL,
+  `estado` TINYINT(1) NOT NULL,
+  `telefono` INT NOT NULL,
+  `direccion` VARCHAR(45) NOT NULL,
+  `Ciudad_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_Teatro_Ciudad1`
+    FOREIGN KEY (`Ciudad_id`)
+    REFERENCES `cinepolis`.`Ciudad` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_Teatro_Ciudad1_idx` ON `cinepolis`.`Teatro` (`Ciudad_id` ASC);
+
+
+-- -----------------------------------------------------
+-- Table `cinepolis`.`TipoSala`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cinepolis`.`TipoSala` ;
+
+CREATE TABLE IF NOT EXISTS `cinepolis`.`TipoSala` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `cinepolis`.`Sala`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cinepolis`.`Sala` ;
+
+CREATE TABLE IF NOT EXISTS `cinepolis`.`Sala` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `numero` INT NOT NULL,
+  `capacidad` INT NOT NULL,
+  `Teatro_id` INT NOT NULL,
+  `Tipo_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_Sala_Teatro1`
+    FOREIGN KEY (`Teatro_id`)
+    REFERENCES `cinepolis`.`Teatro` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Sala_Tipo1`
+    FOREIGN KEY (`Tipo_id`)
+    REFERENCES `cinepolis`.`TipoSala` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_Sala_Teatro1_idx` ON `cinepolis`.`Sala` (`Teatro_id` ASC);
+
+CREATE INDEX `fk_Sala_Tipo1_idx` ON `cinepolis`.`Sala` (`Tipo_id` ASC);
+
+
+-- -----------------------------------------------------
+-- Table `cinepolis`.`Categoria`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cinepolis`.`Categoria` ;
+
+CREATE TABLE IF NOT EXISTS `cinepolis`.`Categoria` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `cinepolis`.`Pelicula`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cinepolis`.`Pelicula` ;
+
+CREATE TABLE IF NOT EXISTS `cinepolis`.`Pelicula` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(45) NOT NULL,
+  `subtitulada` TINYINT(1) NOT NULL,
+  `poster` VARCHAR(45) NOT NULL,
+  `fecha_estreno` DATETIME NOT NULL,
+  `Categoria_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_Pelicula_Categoria1`
+    FOREIGN KEY (`Categoria_id`)
+    REFERENCES `cinepolis`.`Categoria` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_Pelicula_Categoria1_idx` ON `cinepolis`.`Pelicula` (`Categoria_id` ASC);
+
+
+-- -----------------------------------------------------
+-- Table `cinepolis`.`Funcion`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cinepolis`.`Funcion` ;
+
+CREATE TABLE IF NOT EXISTS `cinepolis`.`Funcion` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `hora` VARCHAR(5) NOT NULL,
+  `fecha` DATE NOT NULL,
+  `Sala_id` INT NOT NULL,
+  `Pelicula_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_funcion_Sala1`
+    FOREIGN KEY (`Sala_id`)
+    REFERENCES `cinepolis`.`Sala` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_funcion_Movie1`
+    FOREIGN KEY (`Pelicula_id`)
+    REFERENCES `cinepolis`.`Pelicula` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_funcion_Sala1_idx` ON `cinepolis`.`Funcion` (`Sala_id` ASC);
+
+CREATE INDEX `fk_funcion_Movie1_idx` ON `cinepolis`.`Funcion` (`Pelicula_id` ASC);
+
+
+-- -----------------------------------------------------
+-- Table `cinepolis`.`Reserva`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cinepolis`.`Reserva` ;
+
+CREATE TABLE IF NOT EXISTS `cinepolis`.`Reserva` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `forma_de_pago` VARCHAR(45) NOT NULL,
+  `estado_pago` VARCHAR(45) NOT NULL,
+  `precio` FLOAT NOT NULL,
+  `Cliente_id` INT NOT NULL,
+  `Funcion_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_Reservas_Cliente1`
+    FOREIGN KEY (`Cliente_id`)
+    REFERENCES `cinepolis`.`Cliente` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Reservas_funcion1`
+    FOREIGN KEY (`Funcion_id`)
+    REFERENCES `cinepolis`.`Funcion` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_Reservas_Cliente1_idx` ON `cinepolis`.`Reserva` (`Cliente_id` ASC);
+
+CREATE INDEX `fk_Reservas_funcion1_idx` ON `cinepolis`.`Reserva` (`Funcion_id` ASC);
+
+
+-- -----------------------------------------------------
+-- Table `cinepolis`.`Silla`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cinepolis`.`Silla` ;
+
+CREATE TABLE IF NOT EXISTS `cinepolis`.`Silla` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `numero` INT NOT NULL,
+  `fila` VARCHAR(2) NOT NULL,
+  `estado` VARCHAR(45) NOT NULL,
+  `Sala_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_Silla_Sala1`
+    FOREIGN KEY (`Sala_id`)
+    REFERENCES `cinepolis`.`Sala` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_Silla_Sala1_idx` ON `cinepolis`.`Silla` (`Sala_id` ASC);
+
+
+-- -----------------------------------------------------
+-- Table `cinepolis`.`Reserva_has_Silla`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cinepolis`.`Reserva_has_Silla` ;
+
+CREATE TABLE IF NOT EXISTS `cinepolis`.`Reserva_has_Silla` (
+  `Reserva_id_reserva` INT NOT NULL,
+  `Silla_idSilla` INT NOT NULL,
+  PRIMARY KEY (`Reserva_id_reserva`, `Silla_idSilla`),
+  CONSTRAINT `fk_Reservas_has_Silla_Reservas1`
+    FOREIGN KEY (`Reserva_id_reserva`)
+    REFERENCES `cinepolis`.`Reserva` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Reservas_has_Silla_Silla1`
+    FOREIGN KEY (`Silla_idSilla`)
+    REFERENCES `cinepolis`.`Silla` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_Reservas_has_Silla_Silla1_idx` ON `cinepolis`.`Reserva_has_Silla` (`Silla_idSilla` ASC);
+
+CREATE INDEX `fk_Reservas_has_Silla_Reservas1_idx` ON `cinepolis`.`Reserva_has_Silla` (`Reserva_id_reserva` ASC);
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+INSERT INTO `pais`(`nombre`) VALUES ('Colombia');
+INSERT INTO `ciudad`(`nombre`, `Pais_id`) VALUES ('Cali',1);
+INSERT INTO `ciudad`(`nombre`, `Pais_id`) VALUES ('Bogotá',1);
+INSERT INTO `ciudad`(`nombre`, `Pais_id`) VALUES ('Medellín',1);
+INSERT INTO `ciudad`(`nombre`, `Pais_id`) VALUES ('Barranquilla',1);
+INSERT INTO `tiposala`(`nombre`) VALUES ('2D');
+INSERT INTO `tiposala`(`nombre`) VALUES ('3D');
+INSERT INTO `tiposala`(`nombre`) VALUES ('4Dx');
+INSERT INTO `teatro`(`nombre`, `estado`, `telefono`, `direccion`, `Ciudad_id`) VALUES ('Teatro Jardín Plaza', 1, 2332211,'Cra. 98 #16-200', 1)
+INSERT INTO `teatro`(`nombre`, `estado`, `telefono`, `direccion`, `Ciudad_id`) VALUES ('Unicentro', 1, 2332211,'Cra.100 5 - 169', 1)
+INSERT INTO `sala`(`numero`, `capacidad`, `Teatro_id`, `TipoSala_id`) VALUES (1,50,1,1)
+INSERT INTO `sala`(`numero`, `capacidad`, `Teatro_id`, `TipoSala_id`) VALUES (1,50,2,2)
+INSERT INTO `categoria`(`nombre`) VALUES ('Acción);
+INSERT INTO `pelicula`(`titulo`, `subtitulada`, `poster`, `fecha_estreno`, `Categoria_id`) VALUES ('Rápido y Furioso 8', 0, 'public/assets/images/1.jpg', '2017-04-08 00:00:00',1);

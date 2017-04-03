@@ -21,6 +21,21 @@ class Categoria_bl {
             }
         }
     }
+    
+    public function save($categoriaArr){
+        $categoriaArr["id"] = null;
+        $categoria= Categoria::instanciate($categoriaArr);
+        
+        $r=$categoria->create();
+        $categoriaCreada = Categoria::getBy("nombre", $categoriaArr["nombre"]);
+        if (is_null($categoriaCreada)) {
+                echo "La categoria no se creó";
+            } else {
+                echo "La categoria se creó satisfactoriamente </br>";
+                print_r($categoriaCreada);
+            }    
+        return $r;
+    }
 
     public function buscarCategoriaPorNombre() {
         if (isset($_GET["nombre"])) {

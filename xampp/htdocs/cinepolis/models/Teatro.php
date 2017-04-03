@@ -3,7 +3,7 @@
 Class Teatro extends Model{
 
     protected static $table = "Teatro";
-    private $id;
+    private $id = null;
     private $nombre;
     private $estado;
     private $telefono;
@@ -18,6 +18,14 @@ Class Teatro extends Model{
         $this->direccion = $direccion;
         $this->Ciudad_id = $Ciudad_id;
     }
+    
+    private $has_one = array( 
+      'Ciudad'=>array(
+          'class'=>'Ciudad',
+          'join_as'=>'Ciudad_id',
+          'join_with'=>'id'
+          )
+      );
     
     public function getMyVars() {
         return get_object_vars($this);
@@ -79,4 +87,13 @@ Class Teatro extends Model{
         $this->Ciudad_id = $Ciudad_id;
     }    
     
+    function getHas_one() { 
+        return $this->has_one;
+    }
+
+    function setHas_one($has_one) {
+        $this->has_one = $has_one;
+    }
+
+
 }

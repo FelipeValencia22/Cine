@@ -7,7 +7,23 @@ class Categoria_controller extends Controller{
     }
 
     public function index(){
-        $this->view->render($this,"categoria","Ejemplo");
+        $this->view->render($this,"categorias","Ejemplo");
+    }
+    
+    public function crear() {
+        $this->view->render($this, "categoria", "CinePolis");
+    }
+    
+    public function listar(){
+        $this->view->categorias = Categoria::getAll();
+        $this->view->render($this,"listar","CinePolis");
+      //  print_r(Teatro_bl::listarTeatro());
+    }
+    
+    public function save() {
+        $Categoria=$_POST;
+        $r= Categoria_bl::save($Categoria);
+        header("Location:".URL);
     }
     
     // Categoria

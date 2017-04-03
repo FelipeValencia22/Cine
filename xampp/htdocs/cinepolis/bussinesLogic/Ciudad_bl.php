@@ -10,6 +10,7 @@ class Ciudad_bl {
             return "No hay ciudades";
         }
     }
+    
 
     public function guardarCiudad() {
         if (isset($_GET["nombre"]) && isset($_GET["Pais_id"])) {

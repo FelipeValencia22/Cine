@@ -18,8 +18,9 @@ class Index_controller extends Controller{
     }
 
     public function index(){
-        $this->view->render($this,"index","Ejemplo");
         $this->view->peliculas = Pelicula_bl::listarPeliculas();
+        $this->view->render($this,"index","Ejemplo");
+        
     }
 
 }

@@ -13,42 +13,45 @@
  */
 class Pelicula_bl {
 
-  public function listarPeliculas(){
-      $values = Pelicula::getAll();
-      if(!empty($values)){
+    public function listarPeliculas() {
+        $values = Pelicula::getAll();
+        if (!empty($values)) {
             return $values;
-        }else{
+        } else {
             return "No hay Peliculas";
-        }  
-  }
-  
-  public function  guardarPelicula(){
-      if(isset($_GET["titulo"]) && isset($_GET["subtitulada"]) 
-              && isset($_GET["fecha_estreno"]) && isset($_GET["Categoria_id"]) ){
-          
-          $titulo=$_GET["titulo"];
-          $subtitulada=$_GET["subtitulada"];
-          $fecha_estreno=$_GET["fecha_estreno"];
-          $Categoria_id=$_GET["Categoria_id"];
-          
-          $pelicula = new Pelicula($titulo, $subtitulada, null, $fecha_estreno, $Categoria_id);
-          print_r($pelicula ->create());
-          return $pelicula;
-      }else{
-          echo "Valores nulos";
-      }
-  }
-  
-  public function buscarPeliculaPorTitulo(){
-      if(isset($_GET["titulo"])){
-          $titulo=$_GET["titulo"];
-          $pelicula = Pelicula::getBy("titulo", $titulo);
-          if(!is_null($pelicula)){
-              print_r($pelicula);
-          }else{
-              echo "La pelicula no existe";
-          }
-      }
-  }
+        }
+    }
+
+    public function guardarPelicula($peliculaArr, $poster) {
+        $peliculaArr["id"] = null;
+        $peliculaArr["poster"] = null;
+        $peliculaArr["Categoria_id"] = null;
+        $cat = Categoria::getById($peliculaArr["categoria"]);
+        unset($peliculaArr["categoria"]);
+
+        $peli = Pelicula::instanciate($peliculaArr);
+        $peli->has_one("Categoria", $cat);
+
+        $r = $peli->create();
+
+        $i = Image::upload("../cinepolis/public/assets/images/", "poster", $r["getID"]);
+        $i = substr($i, 13);
+
+        $peli->setPoster($i);
+        $r = $peli->update();
+        return $r;
+    }
+
+    public function buscarPeliculaPorTitulo() {
+        if (isset($_GET["titulo"])) {
+            $titulo = $_GET["titulo"];
+            $pelicula = Pelicula::getBy("titulo", $titulo);
+            if (!is_null($pelicula)) {
+                print_r($pelicula);
+            } else {
+                echo "La pelicula no existe";
+            }
+        }
+    }
 
 }

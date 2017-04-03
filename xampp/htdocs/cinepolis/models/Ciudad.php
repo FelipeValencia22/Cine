@@ -3,7 +3,7 @@
 Class Ciudad extends Model{
 
     protected static $table = "Ciudad";
-    private $id;
+    private $id ;
     private $nombre;
     private $Pais_id;
     
@@ -11,7 +11,15 @@ Class Ciudad extends Model{
         $this->id = $id;
         $this->nombre = $nombre;
         $this->Pais_id = $Pais_id;
-    }
+    }   
+    
+    private $has_one = array( 
+      'Pais'=>array(
+          'class'=>'Pais',
+          'join_as'=>'Pais_id',
+          'join_with'=>'id'
+          )
+      );
     
     public function getMyVars() {
         return get_object_vars($this);
@@ -48,5 +56,13 @@ Class Ciudad extends Model{
     function setPais_id($Pais_id) {
         $this->Pais_id = $Pais_id;
     }
-    
+   
+    function getHas_one() {
+        return $this->has_one;
+    }
+
+    function setHas_one($has_one) {
+        $this->has_one = $has_one;
+    }
+      
 }

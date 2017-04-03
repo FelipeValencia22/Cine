@@ -6,17 +6,20 @@ class Pelicula_controller extends Controller{
         parent::__construct();
     }
 
-    public function index(){
-        $this->view->render($this,"pelicula","Ejemplo");
+    public function crear(){
+        $this->view->categorias = Categoria::getAll();
+        $this->view->render($this,"pelicula","CinePolis");
     }
-    
+       
     // Peliculas
     public function listarPeliculas(){
         print_r(Pelicula_bl::listarPeliculas());
     }
     
-    public function  guardarPelicula(){
-        print_r(Pelicula_bl::guardarPelicula());
+    public function  save(){
+        $pelicula = $_POST;
+        $r = Pelicula_bl::guardarPelicula($pelicula,$_FILES["poster"]);
+        header("Location:".URL);
     }
     
     public function  buscarPeliculaPorTitulo(){

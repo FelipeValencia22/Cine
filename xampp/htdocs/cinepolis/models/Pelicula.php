@@ -19,6 +19,14 @@ class Pelicula extends Model {
         $this->Categoria_id = $Categoria_id;
     }
     
+    private $has_one = array(
+      'Categoria'=>array(
+          'class'=>'Categoria',
+          'join_as'=>'Categoria_id', 
+          'join_with'=>'id'
+          )
+      );
+    
     public function getMyVars() {
         return get_object_vars($this);
     }
@@ -77,6 +85,14 @@ class Pelicula extends Model {
 
     function setCategoria_id($Categoria_id) {
         $this->Categoria_id = $Categoria_id;
+    }
+    
+    function getHas_one() {
+        return $this->has_one;
+    }
+
+    function setHas_one($has_one) {
+        $this->has_one = $has_one;
     }
 
 }

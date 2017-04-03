@@ -6,7 +6,6 @@ Class Categoria extends Model{
     private $id;
     private $nombre;
     
-
     function __construct($nombre, $id = null) {
         $this->id = $id;
         $this->nombre = $nombre;
